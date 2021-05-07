@@ -9,7 +9,7 @@ const {
 const router = express.Router()
 
 router.route("/")
-.post(protect, createEvent)
+.post(createEvent)
 .get(getAllEvent)
 
 router.route("/:_id")

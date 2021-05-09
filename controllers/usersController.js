@@ -4,10 +4,11 @@ const generateToken = require("../utils/generateToken")
 const { validateAddUser } =require("../validations/userValidations")
 
 
+
 const addUser = async(req,res) =>{
   //validate a user
   const {error } = validateAddUser.validate(req.body)
-  if (error) return res.status(402).send(error)
+  if (error) return res.status(402).send(error.details[0].message)
 
     //complexity level and hashing..... using bcrypt
     const salt = await bcrypt.genSalt(10)
@@ -44,7 +45,8 @@ const userLogin = async (req,res) => {
     res.status(202).json({
         _id:user._id,
         name:user.name,
-        email:user.email
+        email:user.email,
+        token:generateToken(user._id),
     })
 }
 
